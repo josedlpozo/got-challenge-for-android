@@ -110,7 +110,7 @@ public class GoTHousesListFragment extends Fragment {
     }
 
     private void initializeAdapter(){
-        housesAdapter = new GoTHouseAdapter(getActivity());
+        housesAdapter = new GoTHouseAdapter();
     }
 
     private void initializeRecyclerView(){
