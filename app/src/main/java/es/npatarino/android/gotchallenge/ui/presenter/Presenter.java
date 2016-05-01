@@ -27,5 +27,9 @@ public class Presenter<T extends Presenter.View> {
         void showLoading();
 
         void hideLoading();
+
+        void showEmptyCase();
+
+        void showError();
     }
 }

@@ -39,4 +39,14 @@ public abstract class BaseFragment extends Fragment implements Presenter.View{
     public void hideLoading(){
         if(loadingView != null) loadingView.setVisibility(View.GONE);
     }
+
+    @Override
+    public void showEmptyCase(){
+
+    }
+
+    @Override
+    public void showError(){
+
+    }
 }

@@ -23,13 +23,17 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
+import es.npatarino.android.gotchallenge.datasource.CharactersDataSource;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
+import es.npatarino.android.gotchallenge.repository.CharacterRepository;
 import es.npatarino.android.gotchallenge.ui.adapter.GoTAdapter;
+import es.npatarino.android.gotchallenge.ui.presenter.CharacterPresenter;
+import es.npatarino.android.gotchallenge.usecase.GetAllCharacters;
 
 /**
  * Created by josedelpozo on 29/4/16.
  */
-public class GoTListFragment extends BaseFragment{
+public class GoTListFragment extends BaseFragment implements CharacterPresenter.View{
 
     private static final String TAG = "GoTListFragment";
 
@@ -37,6 +41,8 @@ public class GoTListFragment extends BaseFragment{
     RecyclerView characterRecyclerView;
 
     GoTAdapter characterAdapter;
+
+    CharacterPresenter characterPresenter;
 
     public GoTListFragment() {
     }
@@ -47,8 +53,9 @@ public class GoTListFragment extends BaseFragment{
         ButterKnife.bind(this, rootView);
         initializeAdapter();
         initializeRecyclerView();
+        initializePresenter();
 
-        new Thread(new Runnable() {
+        /*new Thread(new Runnable() {
 
             @Override
             public void run() {
@@ -84,7 +91,7 @@ public class GoTListFragment extends BaseFragment{
 
 
             }
-        }).start();
+        }).start();*/
         return rootView;
     }
 
@@ -101,5 +108,21 @@ public class GoTListFragment extends BaseFragment{
         characterRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         characterRecyclerView.setHasFixedSize(true);
         characterRecyclerView.setAdapter(characterAdapter);
+    }
+
+    private void initializePresenter(){
+        CharactersDataSource charactersDataSource = new CharactersDataSource();
+        CharacterRepository characterRepository = new CharacterRepository(charactersDataSource);
+        GetAllCharacters getAllCharacters = new GetAllCharacters(characterRepository);
+
+        characterPresenter = new CharacterPresenter(getAllCharacters);
+
+        characterPresenter.setView(this);
+        characterPresenter.initialize();
+    }
+
+    @Override
+    public void showCharacters(List<GoTCharacter> characters) {
+        characterAdapter.addAll(characters);
     }
 }
