@@ -25,14 +25,18 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
+import es.npatarino.android.gotchallenge.datasource.HousesDataSource;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
+import es.npatarino.android.gotchallenge.repository.HousesRepository;
 import es.npatarino.android.gotchallenge.ui.adapter.GoTHouseAdapter;
+import es.npatarino.android.gotchallenge.ui.presenter.HousesPresenter;
+import es.npatarino.android.gotchallenge.usecase.GetAllHouses;
 
 /**
  * Created by josedelpozo on 29/4/16.
  */
-public class GoTHousesListFragment extends BaseFragment {
+public class GoTHousesListFragment extends BaseFragment implements HousesPresenter.View{
 
     private static final String TAG = "GoTHousesListFragment";
 
@@ -40,6 +44,8 @@ public class GoTHousesListFragment extends BaseFragment {
     RecyclerView housesRecyclerView;
 
     GoTHouseAdapter housesAdapter;
+
+    HousesPresenter housesPresenter;
 
     public GoTHousesListFragment() {
     }
@@ -50,60 +56,7 @@ public class GoTHousesListFragment extends BaseFragment {
         ButterKnife.bind(this, rootView);
         initializeAdapter();
         initializeRecyclerView();
-
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                String url = "http://52.18.228.107:3000/characters";
-
-                URL obj = null;
-                try {
-                    obj = new URL(url);
-                    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-                    con.setRequestMethod("GET");
-                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String inputLine;
-                    StringBuffer response = new StringBuffer();
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
-                    }
-                    in.close();
-                    Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
-                    }.getType();
-                    final List<GoTCharacter> characters = new Gson().fromJson(response.toString(), listType);
-                    GoTHousesListFragment.this.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ArrayList<GoTHouse> hs = new ArrayList<GoTHouse>();
-                            for (int i = 0; i < characters.size(); i++) {
-                                boolean b = false;
-                                for (int j = 0; j < hs.size(); j++) {
-                                    if (hs.get(j).getHouseName().equalsIgnoreCase(characters.get(i).getHouseName())) {
-                                        b = true;
-                                    }
-                                }
-                                if (!b) {
-                                    if (characters.get(i).getHouseId() != null && !characters.get(i).getHouseId().isEmpty()) {
-                                        GoTHouse h = new GoTHouse();
-                                        h.setHouseId(characters.get(i).getHouseId());
-                                        h.setHouseName(characters.get(i).getHouseName());
-                                        h.setHouseImageUrl(characters.get(i).getHouseImageUrl());
-                                        hs.add(h);
-                                        b = false;
-                                    }
-                                }
-                            }
-                            housesAdapter.addAll(hs);
-                            housesAdapter.notifyDataSetChanged();
-                            hideLoading();
-                        }
-                    });
-                } catch (IOException e) {
-                    Log.e(TAG, e.getLocalizedMessage());
-                }
-            }
-        }).start();
+        initializePresenter();
         return rootView;
     }
 
@@ -120,5 +73,21 @@ public class GoTHousesListFragment extends BaseFragment {
         housesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         housesRecyclerView.setHasFixedSize(true);
         housesRecyclerView.setAdapter(housesAdapter);
+    }
+
+    private void initializePresenter(){
+        HousesDataSource housesDataSource = new HousesDataSource();
+        HousesRepository housesRepository = new HousesRepository(housesDataSource);
+        GetAllHouses getAllHouses = new GetAllHouses(housesRepository);
+
+        housesPresenter = new HousesPresenter(getAllHouses);
+
+        housesPresenter.setView(this);
+        housesPresenter.initialize();
+    }
+
+    @Override
+    public void showHouses(List<GoTHouse> houses) {
+        housesAdapter.addAll(houses);
     }
 }

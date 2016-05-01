@@ -54,44 +54,6 @@ public class GoTListFragment extends BaseFragment implements CharacterPresenter.
         initializeAdapter();
         initializeRecyclerView();
         initializePresenter();
-
-        /*new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                String url = "http://52.18.228.107:3000/characters";
-
-                URL obj = null;
-                try {
-                    obj = new URL(url);
-                    HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-                    con.setRequestMethod("GET");
-                    BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String inputLine;
-                    StringBuffer response = new StringBuffer();
-                    while ((inputLine = in.readLine()) != null) {
-                        response.append(inputLine);
-                    }
-                    in.close();
-
-                    Type listType = new TypeToken<ArrayList<GoTCharacter>>() {
-                    }.getType();
-                    final List<GoTCharacter> characters = new Gson().fromJson(response.toString(), listType);
-                    GoTListFragment.this.getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            characterAdapter.addAll(characters);
-                            characterAdapter.notifyDataSetChanged();
-                            hideLoading();
-                        }
-                    });
-                } catch (IOException e) {
-                    Log.e(TAG, e.getLocalizedMessage());
-                }
-
-
-            }
-        }).start();*/
         return rootView;
     }
 
