@@ -94,7 +94,7 @@ public class GoTListFragment extends Fragment {
     }
 
     private void initializeAdapter(){
-        characterAdapter = new GoTAdapter(getActivity());
+        characterAdapter = new GoTAdapter();
     }
 
     private void initializeRecyclerView(){
