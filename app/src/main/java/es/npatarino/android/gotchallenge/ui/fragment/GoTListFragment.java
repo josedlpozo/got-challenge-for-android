@@ -51,7 +51,7 @@ public class GoTListFragment extends Fragment {
 
             @Override
             public void run() {
-                String url = "http://ec2-52-18-202-124.eu-west-1.compute.amazonaws.com:3000/characters";
+                String url = "http://52.18.228.107:3000/characters";
 
                 URL obj = null;
                 try {
