@@ -22,8 +22,13 @@ public class CharacterPresenter extends Presenter<CharacterPresenter.View>{
         getAllCharacters.getAllCharacters(new GetAllCharacters.Callback() {
             @Override
             public void charactersLoaded(List<GoTCharacter> characters) {
-                getView().hideLoading();
-                getView().showCharacters(characters);
+                if(characters.size() == 0){
+                    getView().hideLoading();
+                    getView().showEmptyCase();
+                }else{
+                    getView().hideLoading();
+                    getView().showCharacters(characters);
+                }
             }
 
             @Override

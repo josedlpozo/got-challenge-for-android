@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,6 +21,9 @@ public abstract class BaseFragment extends Fragment implements Presenter.View{
     @Nullable
     @BindView(R.id.progress_bar)
     View loadingView;
+    @Nullable
+    @BindView(R.id.empty_case)
+    TextView emptyCase;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public abstract class BaseFragment extends Fragment implements Presenter.View{
 
     @Override
     public void showEmptyCase(){
-
+        emptyCase.setVisibility(View.VISIBLE);
     }
 
     @Override
