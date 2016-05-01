@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,11 +47,11 @@ public abstract class BaseFragment extends Fragment implements Presenter.View{
 
     @Override
     public void showEmptyCase(){
-        emptyCase.setVisibility(View.VISIBLE);
+        if(emptyCase!= null) emptyCase.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void showError(){
-
+        Toast.makeText(getContext(), getString(R.string.error_case), Toast.LENGTH_SHORT).show();
     }
 }
