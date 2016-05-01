@@ -1,9 +1,6 @@
 package es.npatarino.android.gotchallenge.ui.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.ContentLoadingProgressBar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -32,12 +29,10 @@ import es.npatarino.android.gotchallenge.ui.adapter.GoTAdapter;
 /**
  * Created by josedelpozo on 29/4/16.
  */
-public class GoTListFragment extends Fragment {
+public class GoTListFragment extends BaseFragment{
 
     private static final String TAG = "GoTListFragment";
 
-    @BindView(R.id.progressBar)
-    ContentLoadingProgressBar progressBar;
     @BindView(R.id.recycler_view)
     RecyclerView characterRecyclerView;
 
@@ -48,7 +43,7 @@ public class GoTListFragment extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+        View rootView = inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, rootView);
         initializeAdapter();
         initializeRecyclerView();
@@ -80,7 +75,7 @@ public class GoTListFragment extends Fragment {
                         public void run() {
                             characterAdapter.addAll(characters);
                             characterAdapter.notifyDataSetChanged();
-                            progressBar.hide();
+                            hideLoading();
                         }
                     });
                 } catch (IOException e) {
@@ -91,6 +86,11 @@ public class GoTListFragment extends Fragment {
             }
         }).start();
         return rootView;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_list;
     }
 
     private void initializeAdapter(){

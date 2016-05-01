@@ -32,12 +32,10 @@ import es.npatarino.android.gotchallenge.ui.adapter.GoTHouseAdapter;
 /**
  * Created by josedelpozo on 29/4/16.
  */
-public class GoTHousesListFragment extends Fragment {
+public class GoTHousesListFragment extends BaseFragment {
 
     private static final String TAG = "GoTHousesListFragment";
 
-    @BindView(R.id.progressBar)
-    ContentLoadingProgressBar progressBar;
     @BindView(R.id.recycler_view)
     RecyclerView housesRecyclerView;
 
@@ -48,7 +46,7 @@ public class GoTHousesListFragment extends Fragment {
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_list, container, false);
+        View rootView = inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, rootView);
         initializeAdapter();
         initializeRecyclerView();
@@ -98,7 +96,7 @@ public class GoTHousesListFragment extends Fragment {
                             }
                             housesAdapter.addAll(hs);
                             housesAdapter.notifyDataSetChanged();
-                            progressBar.hide();
+                            hideLoading();
                         }
                     });
                 } catch (IOException e) {
@@ -107,6 +105,11 @@ public class GoTHousesListFragment extends Fragment {
             }
         }).start();
         return rootView;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_list;
     }
 
     private void initializeAdapter(){
