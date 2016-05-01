@@ -1,5 +1,6 @@
 package es.npatarino.android.gotchallenge.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -22,6 +23,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.ui.adapter.GoTAdapter;
@@ -33,19 +36,22 @@ public class GoTListFragment extends Fragment {
 
     private static final String TAG = "GoTListFragment";
 
+    @BindView(R.id.progressBar)
+    ContentLoadingProgressBar progressBar;
+    @BindView(R.id.recycler_view)
+    RecyclerView characterRecyclerView;
+
+    GoTAdapter characterAdapter;
+
     public GoTListFragment() {
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
-        final ContentLoadingProgressBar pb = (ContentLoadingProgressBar) rootView.findViewById(R.id.pb);
-        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.rv);
-
-        final GoTAdapter adp = new GoTAdapter(getActivity());
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv.setHasFixedSize(true);
-        rv.setAdapter(adp);
+        ButterKnife.bind(this, rootView);
+        initializeAdapter();
+        initializeRecyclerView();
 
         new Thread(new Runnable() {
 
@@ -72,9 +78,9 @@ public class GoTListFragment extends Fragment {
                     GoTListFragment.this.getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            adp.addAll(characters);
-                            adp.notifyDataSetChanged();
-                            pb.hide();
+                            characterAdapter.addAll(characters);
+                            characterAdapter.notifyDataSetChanged();
+                            progressBar.hide();
                         }
                     });
                 } catch (IOException e) {
@@ -85,5 +91,15 @@ public class GoTListFragment extends Fragment {
             }
         }).start();
         return rootView;
+    }
+
+    private void initializeAdapter(){
+        characterAdapter = new GoTAdapter(getActivity());
+    }
+
+    private void initializeRecyclerView(){
+        characterRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        characterRecyclerView.setHasFixedSize(true);
+        characterRecyclerView.setAdapter(characterAdapter);
     }
 }

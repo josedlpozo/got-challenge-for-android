@@ -36,6 +36,7 @@ import java.util.Collection;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
@@ -60,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
         initializeToolbar();
         initializeFragmentPagerAdapter();
         initializeViewPager();
