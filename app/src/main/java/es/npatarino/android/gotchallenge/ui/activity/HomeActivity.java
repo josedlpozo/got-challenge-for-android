@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import butterknife.BindView;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
@@ -45,41 +46,40 @@ import es.npatarino.android.gotchallenge.ui.viewholder.GotCharacterViewHolder;
 
 public class HomeActivity extends AppCompatActivity {
 
-    SectionsPagerAdapter spa;
-    ViewPager vp;
+
+    @BindView(R.id.container)
+    ViewPager viewPager;
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
+    @BindView(R.id.tabs)
     TabLayout tabLayout;
+
+    SectionsPagerAdapter fragmentPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        initializeToolbar();
+        initializeFragmentPagerAdapter();
+        initializeViewPager();
+        initializeTabLayout();
+    }
 
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+    private void initializeToolbar(){
         setSupportActionBar(toolbar);
-        setSpa(new SectionsPagerAdapter(getSupportFragmentManager()));
-
-        setVp((ViewPager) findViewById(R.id.container));
-        getVp().setAdapter(getSpa());
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(getVp());
     }
 
-    public SectionsPagerAdapter getSpa() {
-        return spa;
+    private void initializeFragmentPagerAdapter(){
+        fragmentPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
     }
 
-    public void setSpa(SectionsPagerAdapter spa) {
-        this.spa = spa;
+    private void initializeViewPager(){
+        viewPager.setAdapter(fragmentPagerAdapter);
     }
 
-    public ViewPager getVp() {
-        return vp;
-    }
-
-    public void setVp(ViewPager vp) {
-        this.vp = vp;
+    private void initializeTabLayout(){
+        tabLayout.setupWithViewPager(viewPager);
     }
 
 }

@@ -31,7 +31,7 @@ public class GotCharacterViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void render(final GoTCharacter goTCharacter) {
-        Picasso.with(itemView.getContext()).load(goTCharacter.getHouseImageUrl()).into(imp);
+        Picasso.with(itemView.getContext()).load(goTCharacter.getImageUrl()).into(imp);
         tvn.setText(goTCharacter.getName());
     }
 }
