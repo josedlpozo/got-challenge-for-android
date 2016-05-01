@@ -22,6 +22,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
@@ -34,19 +36,22 @@ public class GoTHousesListFragment extends Fragment {
 
     private static final String TAG = "GoTHousesListFragment";
 
+    @BindView(R.id.progressBar)
+    ContentLoadingProgressBar progressBar;
+    @BindView(R.id.recycler_view)
+    RecyclerView housesRecyclerView;
+
+    GoTHouseAdapter housesAdapter;
+
     public GoTHousesListFragment() {
     }
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container, final Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_list, container, false);
-        final ContentLoadingProgressBar pb = (ContentLoadingProgressBar) rootView.findViewById(R.id.progressBar);
-        RecyclerView rv = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-
-        final GoTHouseAdapter adp = new GoTHouseAdapter(getActivity());
-        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rv.setHasFixedSize(true);
-        rv.setAdapter(adp);
+        ButterKnife.bind(this, rootView);
+        initializeAdapter();
+        initializeRecyclerView();
 
         new Thread(new Runnable() {
 
@@ -85,15 +90,15 @@ public class GoTHousesListFragment extends Fragment {
                                         GoTHouse h = new GoTHouse();
                                         h.setHouseId(characters.get(i).getHouseId());
                                         h.setHouseName(characters.get(i).getHouseName());
-                                        h.setHouseImageUrl(characters.get(i).getImageUrl());
+                                        h.setHouseImageUrl(characters.get(i).getHouseImageUrl());
                                         hs.add(h);
                                         b = false;
                                     }
                                 }
                             }
-                            adp.addAll(hs);
-                            adp.notifyDataSetChanged();
-                            pb.hide();
+                            housesAdapter.addAll(hs);
+                            housesAdapter.notifyDataSetChanged();
+                            progressBar.hide();
                         }
                     });
                 } catch (IOException e) {
@@ -102,5 +107,15 @@ public class GoTHousesListFragment extends Fragment {
             }
         }).start();
         return rootView;
+    }
+
+    private void initializeAdapter(){
+        housesAdapter = new GoTHouseAdapter(getActivity());
+    }
+
+    private void initializeRecyclerView(){
+        housesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        housesRecyclerView.setHasFixedSize(true);
+        housesRecyclerView.setAdapter(housesAdapter);
     }
 }
