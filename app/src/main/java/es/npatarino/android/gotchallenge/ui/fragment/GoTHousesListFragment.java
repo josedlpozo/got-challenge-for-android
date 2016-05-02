@@ -1,5 +1,6 @@
 package es.npatarino.android.gotchallenge.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.ContentLoadingProgressBar;
@@ -29,6 +30,7 @@ import es.npatarino.android.gotchallenge.datasource.HousesDataSource;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
 import es.npatarino.android.gotchallenge.repository.HousesRepository;
+import es.npatarino.android.gotchallenge.ui.activity.DetailActivity;
 import es.npatarino.android.gotchallenge.ui.adapter.GoTHouseAdapter;
 import es.npatarino.android.gotchallenge.ui.presenter.HousesPresenter;
 import es.npatarino.android.gotchallenge.usecase.GetAllHouses;
@@ -66,7 +68,7 @@ public class GoTHousesListFragment extends BaseFragment implements HousesPresent
     }
 
     private void initializeAdapter(){
-        housesAdapter = new GoTHouseAdapter();
+        housesAdapter = new GoTHouseAdapter(housesPresenter);
     }
 
     private void initializeRecyclerView(){
@@ -89,5 +91,12 @@ public class GoTHousesListFragment extends BaseFragment implements HousesPresent
     @Override
     public void showHouses(List<GoTHouse> houses) {
         housesAdapter.addAll(houses);
+    }
+
+    @Override
+    public void clickOnHouse(GoTHouse house) {
+        Intent intent = new Intent(getContext(), DetailActivity.class);
+        intent.putExtra("house_id", house.getHouseId());
+        getContext().startActivity(intent);
     }
 }

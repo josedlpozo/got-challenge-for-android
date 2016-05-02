@@ -13,7 +13,6 @@
         android:layout_height="match_parent"
         android:layout_below="@id/t"
         tools:context="li.nibble.android.codingtest.MainActivity"
-        tools:showIn="@layout/fragment_list"
         />
 
     <android.support.v4.widget.ContentLoadingProgressBar

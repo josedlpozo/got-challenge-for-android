@@ -19,6 +19,7 @@ import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
+import es.npatarino.android.gotchallenge.ui.presenter.HousesPresenter;
 import es.npatarino.android.gotchallenge.ui.viewholder.GoTHouseViewHolder;
 
 /**
@@ -27,9 +28,11 @@ import es.npatarino.android.gotchallenge.ui.viewholder.GoTHouseViewHolder;
 public class GoTHouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<GoTHouse> houses;
+    private HousesPresenter presenter;
 
-    public GoTHouseAdapter() {
+    public GoTHouseAdapter(HousesPresenter presenter) {
         this.houses = new ArrayList<>();
+        this.presenter = presenter;
     }
 
     public void addAll(Collection<GoTHouse> collection) {
@@ -41,13 +44,15 @@ public class GoTHouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.got_house_row, parent, false);
-        return new GoTHouseViewHolder(view);
+        return new GoTHouseViewHolder(view, presenter);
     }
 
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         GoTHouseViewHolder gotCharacterViewHolder = (GoTHouseViewHolder) holder;
-        gotCharacterViewHolder.render(houses.get(position));
+        GoTHouse house = houses.get(position);
+        gotCharacterViewHolder.render(house);
+        gotCharacterViewHolder.hookListener(house);
     }
 
     @Override

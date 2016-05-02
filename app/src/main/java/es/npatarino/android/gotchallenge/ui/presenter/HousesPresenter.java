@@ -41,7 +41,13 @@ public class HousesPresenter extends Presenter<HousesPresenter.View>{
         });
     }
 
+    public void clickOnHouse(GoTHouse house){
+        getView().clickOnHouse(house);
+    }
+
     public interface View extends Presenter.View{
         void showHouses(List<GoTHouse> houses);
+
+        void clickOnHouse(GoTHouse house);
     }
 }
