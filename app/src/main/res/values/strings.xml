@@ -5,5 +5,7 @@
 
     <string name="characters_empty_case">There are no characters to show.</string>
 
-    <string name="error_case">There was an error</string>
+    <string name="error_case">There was an error.</string>
+
+    <string name="search_hint">Type a name</string>
 </resources>

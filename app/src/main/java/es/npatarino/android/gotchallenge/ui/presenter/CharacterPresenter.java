@@ -4,6 +4,7 @@ import java.util.List;
 
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.usecase.GetAllCharacters;
+import es.npatarino.android.gotchallenge.usecase.GetCharactersByQuery;
 
 /**
  * Created by josedelpozo on 1/5/16.
@@ -12,8 +13,12 @@ public class CharacterPresenter extends Presenter<CharacterPresenter.View>{
 
     private GetAllCharacters getAllCharacters;
 
-    public CharacterPresenter(GetAllCharacters getAllCharacters){
+    private GetCharactersByQuery getCharactersByQuery;
+
+    public CharacterPresenter(GetAllCharacters getAllCharacters,
+                              GetCharactersByQuery getCharactersByQuery){
         this.getAllCharacters = getAllCharacters;
+        this.getCharactersByQuery = getCharactersByQuery;
     }
 
 
@@ -40,12 +45,37 @@ public class CharacterPresenter extends Presenter<CharacterPresenter.View>{
     }
 
     public void clickOnCharacter(GoTCharacter character){
+        getView().clickOnCharacter(character);
+    }
 
+    public void searchCharactersByQuery(String query){
+        getView().clearAllCharacters();
+        getView().showLoading();
+
+        getCharactersByQuery.getCharactersByQuery(query, new GetCharactersByQuery.Callback() {
+            @Override
+            public void charactersLoaded(List<GoTCharacter> characterList) {
+                if(characterList.size() == 0){
+                    getView().hideLoading();
+                    getView().showEmptyCase();
+                }else{
+                    getView().hideLoading();
+                    getView().showCharacters(characterList);
+                }
+            }
+
+            @Override
+            public void onError() {
+                getView().showError();
+            }
+        });
     }
 
     public interface View extends Presenter.View{
         void showCharacters(List<GoTCharacter> characters);
 
         void clickOnCharacter(GoTCharacter character);
+
+        void clearAllCharacters();
     }
 }

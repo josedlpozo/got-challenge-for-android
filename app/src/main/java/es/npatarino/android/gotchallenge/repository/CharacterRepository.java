@@ -35,6 +35,17 @@ public class CharacterRepository {
         });
     }
 
+    public void getCharactersByQuery(String query, Callback callback){
+        List<GoTCharacter> aux = new ArrayList<>();
+        for(GoTCharacter character : characters){
+            String characterName = character.getName().toLowerCase();
+            String queryLowerCase = query.toLowerCase();
+            if(characterName.contains(queryLowerCase)) aux.add(character);
+        }
+
+        callback.charactersLoaded(aux);
+    }
+
     public interface Callback{
         void charactersLoaded(List<GoTCharacter> characters);
 

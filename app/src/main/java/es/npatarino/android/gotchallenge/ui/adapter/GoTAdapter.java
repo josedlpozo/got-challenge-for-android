@@ -36,6 +36,11 @@ public class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public void clearAll(){
+        characters.clear();
+        notifyDataSetChanged();
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.got_character_row, parent, false);
@@ -45,18 +50,9 @@ public class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder holder, final int position) {
         GotCharacterViewHolder gotCharacterViewHolder = (GotCharacterViewHolder) holder;
-        final GoTCharacter character = characters.get(position);
+        GoTCharacter character = characters.get(position);
         gotCharacterViewHolder.render(character);
-        ((GotCharacterViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(final View v) {
-                Intent intent = new Intent(((GotCharacterViewHolder) holder).itemView.getContext(), DetailActivity.class);
-                intent.putExtra("description", character.getDescription());
-                intent.putExtra("name", character.getName());
-                intent.putExtra("imageUrl", character.getImageUrl());
-                ((GotCharacterViewHolder) holder).itemView.getContext().startActivity(intent);
-            }
-        });
+        gotCharacterViewHolder.hookListener(character);
     }
 
     @Override
