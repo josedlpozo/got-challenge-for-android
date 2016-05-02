@@ -9,55 +9,68 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.io.IOException;
 import java.net.URL;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 
-public class DetailActivity extends AppCompatActivity {
+public class DetailActivity extends BaseActivity {
 
 
     private static final String TAG = "DetailActivity";
 
+    @BindView(R.id.character_name)
+    TextView characterName;
+    @BindView(R.id.character_image)
+    ImageView characterImage;
+    @BindView(R.id.character_description)
+    TextView characterDescription;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(getLayoutId());
+        ButterKnife.bind(this);
+        initializeUI();
+        initializeToolbar();
+    }
 
-        final ImageView ivp = (ImageView) findViewById(R.id.iv_photo);
-        final TextView tvn = (TextView) findViewById(R.id.tv_name);
-        final TextView tvd = (TextView) findViewById(R.id.tv_description);
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_detail;
+    }
 
-        final String d = getIntent().getStringExtra("description");
-        final String n = getIntent().getStringExtra("name");
-        final String i = getIntent().getStringExtra("imageUrl");
+    private String getCharacterDescription(){
+        return getIntent().getStringExtra("description");
+    }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.t);
-        toolbar.setTitle(n);
+    private String getCharacterName(){
+        return getIntent().getStringExtra("name");
+    }
+
+    private String getCharacterImageUrl(){
+        return getIntent().getStringExtra("imageUrl");
+    }
+
+    private void initializeUI(){
+        Picasso.with(this).load(getCharacterImageUrl()).into(characterImage);
+
+        characterDescription.setText(getCharacterDescription());
+
+        characterName.setText(getCharacterName());
+    }
+
+    private void initializeToolbar(){
+        toolbar.setTitle(getCharacterName());
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                URL url = null;
-                try {
-                    url = new URL(i);
-                    final Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                    DetailActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ivp.setImageBitmap(bmp);
-                            tvn.setText(n);
-                            tvd.setText(d);
-                        }
-                    });
-                } catch (IOException e) {
-                    Log.e(TAG, e.getLocalizedMessage());
-                }
-            }
-        }).start();
     }
 }

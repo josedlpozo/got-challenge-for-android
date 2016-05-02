@@ -131,10 +131,10 @@ public class GoTListFragment extends BaseFragment implements CharacterListPresen
         MenuItem item = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(this);
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        /*SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
         searchView.setIconified(false);
-        searchView.setQueryHint(getString(R.string.search_hint));
+        searchView.setQueryHint(getString(R.string.search_hint));*/
     }
 
 }
