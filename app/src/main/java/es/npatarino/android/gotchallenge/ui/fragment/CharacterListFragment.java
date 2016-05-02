@@ -1,7 +1,5 @@
 package es.npatarino.android.gotchallenge.ui.fragment;
 
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.MenuItemCompat;
@@ -23,7 +21,7 @@ import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.datasource.CharactersDataSource;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.repository.CharacterRepository;
-import es.npatarino.android.gotchallenge.ui.activity.DetailActivity;
+import es.npatarino.android.gotchallenge.ui.activity.CharacterDetailActivity;
 import es.npatarino.android.gotchallenge.ui.adapter.CharactersAdapter;
 import es.npatarino.android.gotchallenge.ui.presenter.CharacterListPresenter;
 import es.npatarino.android.gotchallenge.usecase.GetAllCharacters;
@@ -32,9 +30,9 @@ import es.npatarino.android.gotchallenge.usecase.GetCharactersByQuery;
 /**
  * Created by josedelpozo on 29/4/16.
  */
-public class GoTListFragment extends BaseFragment implements CharacterListPresenter.View, SearchView.OnQueryTextListener{
+public class CharacterListFragment extends BaseFragment implements CharacterListPresenter.View, SearchView.OnQueryTextListener{
 
-    private static final String TAG = "GoTListFragment";
+    private static final String TAG = "CharacterListFragment";
 
     @BindView(R.id.recycler_view)
     RecyclerView characterRecyclerView;
@@ -45,7 +43,7 @@ public class GoTListFragment extends BaseFragment implements CharacterListPresen
 
     SearchView searchView;
 
-    public GoTListFragment() {
+    public CharacterListFragment() {
     }
 
     @Override
@@ -99,10 +97,10 @@ public class GoTListFragment extends BaseFragment implements CharacterListPresen
 
     @Override
     public void clickOnCharacter(GoTCharacter character) {
-        Intent intent = new Intent(getContext(), DetailActivity.class);
+        Intent intent = new Intent(getContext(), CharacterDetailActivity.class);
         intent.putExtra("description", character.getDescription());
         intent.putExtra("name", character.getName());
-        intent.putExtra("imageUrl", character.getImageUrl());
+        intent.putExtra("image_url", character.getImageUrl());
         getContext().startActivity(intent);
     }
 

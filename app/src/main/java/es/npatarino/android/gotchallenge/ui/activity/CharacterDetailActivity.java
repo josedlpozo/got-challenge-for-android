@@ -18,10 +18,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 
-public class DetailActivity extends BaseActivity {
+public class CharacterDetailActivity extends BaseActivity {
 
 
-    private static final String TAG = "DetailActivity";
+    private static final String TAG = "CharacterDetailActivity";
 
     @BindView(R.id.character_name)
     TextView characterName;

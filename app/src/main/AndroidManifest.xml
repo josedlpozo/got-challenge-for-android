@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.activity.DetailActivity"
+            android:name=".ui.activity.CharacterDetailActivity"
             android:parentActivityName=".ui.activity.HomeActivity"></activity>
         <activity
             android:name=".ui.activity.HomeActivity"

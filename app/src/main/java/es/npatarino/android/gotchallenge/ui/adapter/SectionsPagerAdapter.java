@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import es.npatarino.android.gotchallenge.ui.fragment.GoTHousesListFragment;
-import es.npatarino.android.gotchallenge.ui.fragment.GoTListFragment;
+import es.npatarino.android.gotchallenge.ui.fragment.HousesListFragment;
+import es.npatarino.android.gotchallenge.ui.fragment.CharacterListFragment;
 
 /**
  * Created by josedelpozo on 29/4/16.
@@ -19,9 +19,9 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return new GoTListFragment();
+            return new CharacterListFragment();
         } else {
-            return new GoTHousesListFragment();
+            return new HousesListFragment();
         }
     }
 

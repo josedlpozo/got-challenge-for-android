@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -115,7 +114,7 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
 
     @Override
     public void clickOnCharacter(GoTCharacter character) {
-        Intent intent = new Intent(this, DetailActivity.class);
+        Intent intent = new Intent(this, CharacterDetailActivity.class);
         intent.putExtra("description", character.getDescription());
         intent.putExtra("name", character.getName());
         intent.putExtra("image_url", character.getImageUrl());

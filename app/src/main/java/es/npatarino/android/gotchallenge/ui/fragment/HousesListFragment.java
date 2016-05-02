@@ -24,9 +24,9 @@ import es.npatarino.android.gotchallenge.usecase.GetAllHouses;
 /**
  * Created by josedelpozo on 29/4/16.
  */
-public class GoTHousesListFragment extends BaseFragment implements HousesPresenter.View{
+public class HousesListFragment extends BaseFragment implements HousesPresenter.View{
 
-    private static final String TAG = "GoTHousesListFragment";
+    private static final String TAG = "HousesListFragment";
 
     @BindView(R.id.recycler_view)
     RecyclerView housesRecyclerView;
@@ -35,7 +35,7 @@ public class GoTHousesListFragment extends BaseFragment implements HousesPresent
 
     HousesPresenter housesPresenter;
 
-    public GoTHousesListFragment() {
+    public HousesListFragment() {
     }
 
     @Override
