@@ -4,6 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,6 +28,10 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
 
     @BindView(R.id.recycler_view)
     RecyclerView charactersRecyclerView;
+    @BindView(R.id.house_image)
+    ImageView houseImage;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     private CharactersAdapter characterAdapter;
 
@@ -35,11 +45,33 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
         initializePresenter();
         initializeAdapter();
         initializeRecyclerView();
+        initializeUI();
+        initializeToolbar();
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_characters_by_house;
+    }
+
+    private void initializeToolbar(){
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void initializeUI(){
+        Picasso.with(this).load(getHouseImageUrl()).into(houseImage);
+
+        setTitle(getHouseName());
     }
 
     private void initializePresenter(){
@@ -66,6 +98,14 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
 
     public String getHouseId(){
         return getIntent().getStringExtra("house_id");
+    }
+
+    public String getHouseName(){
+        return getIntent().getStringExtra("house_name");
+    }
+
+    public String getHouseImageUrl(){
+        return getIntent().getStringExtra("house_image");
     }
 
     @Override

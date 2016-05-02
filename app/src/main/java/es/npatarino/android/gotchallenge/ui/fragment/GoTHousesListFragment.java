@@ -84,6 +84,8 @@ public class GoTHousesListFragment extends BaseFragment implements HousesPresent
     public void clickOnHouse(GoTHouse house) {
         Intent intent = new Intent(getContext(), CharactersByHouseActivity.class);
         intent.putExtra("house_id", house.getHouseId());
+        intent.putExtra("house_name", house.getHouseName());
+        intent.putExtra("house_image", house.getHouseImageUrl());
         getContext().startActivity(intent);
     }
 }
