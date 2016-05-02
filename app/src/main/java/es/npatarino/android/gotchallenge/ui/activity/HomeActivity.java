@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.ui.adapter.SectionsPagerAdapter;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
 
     @BindView(R.id.container)
@@ -24,14 +24,19 @@ public class HomeActivity extends AppCompatActivity {
     SectionsPagerAdapter fragmentPagerAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(getLayoutId());
         ButterKnife.bind(this);
         initializeToolbar();
         initializeFragmentPagerAdapter();
         initializeViewPager();
         initializeTabLayout();
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_home;
     }
 
     private void initializeToolbar(){
