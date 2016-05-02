@@ -96,15 +96,15 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
     }
 
     public String getHouseId(){
-        return getIntent().getStringExtra("house_id");
+        return getIntent().getStringExtra(getString(R.string.house_id_extra));
     }
 
     public String getHouseName(){
-        return getIntent().getStringExtra("house_name");
+        return getIntent().getStringExtra(getString(R.string.house_name_extra));
     }
 
     public String getHouseImageUrl(){
-        return getIntent().getStringExtra("house_image");
+        return getIntent().getStringExtra(getString(R.string.house_image_url_extra));
     }
 
     @Override
@@ -115,9 +115,9 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
     @Override
     public void clickOnCharacter(GoTCharacter character) {
         Intent intent = new Intent(this, CharacterDetailActivity.class);
-        intent.putExtra("description", character.getDescription());
-        intent.putExtra("name", character.getName());
-        intent.putExtra("image_url", character.getImageUrl());
+        intent.putExtra(getString(R.string.character_description_extra), character.getDescription());
+        intent.putExtra(getString(R.string.character_name_extra), character.getName());
+        intent.putExtra(getString(R.string.character_image_url_extra), character.getImageUrl());
         startActivity(intent);
     }
 

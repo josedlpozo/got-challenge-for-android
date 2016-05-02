@@ -83,9 +83,9 @@ public class HousesListFragment extends BaseFragment implements HousesPresenter.
     @Override
     public void clickOnHouse(GoTHouse house) {
         Intent intent = new Intent(getContext(), CharactersByHouseActivity.class);
-        intent.putExtra("house_id", house.getHouseId());
-        intent.putExtra("house_name", house.getHouseName());
-        intent.putExtra("house_image", house.getHouseImageUrl());
+        intent.putExtra(getString(R.string.house_id_extra), house.getHouseId());
+        intent.putExtra(getString(R.string.house_name_extra), house.getHouseName());
+        intent.putExtra(getString(R.string.house_image_url_extra), house.getHouseImageUrl());
         getContext().startActivity(intent);
     }
 }

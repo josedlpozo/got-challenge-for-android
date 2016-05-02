@@ -8,4 +8,14 @@
     <string name="error_case">There was an error.</string>
 
     <string name="search_hint">Type a name</string>
+
+    <string name="character_name_extra">character_name</string>
+    <string name="character_description_extra">character_description</string>
+    <string name="character_image_url_extra">character_image_url</string>
+
+    <string name="house_name_extra">house_name</string>
+    <string name="house_id_extra">house_id</string>
+    <string name="house_image_url_extra">house_image_url</string>
+
+
 </resources>

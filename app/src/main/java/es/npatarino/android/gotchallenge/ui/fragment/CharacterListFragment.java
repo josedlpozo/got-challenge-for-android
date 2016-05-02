@@ -98,9 +98,9 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
     @Override
     public void clickOnCharacter(GoTCharacter character) {
         Intent intent = new Intent(getContext(), CharacterDetailActivity.class);
-        intent.putExtra("description", character.getDescription());
-        intent.putExtra("name", character.getName());
-        intent.putExtra("image_url", character.getImageUrl());
+        intent.putExtra(getString(R.string.character_description_extra), character.getDescription());
+        intent.putExtra(getString(R.string.character_name_extra), character.getName());
+        intent.putExtra(getString(R.string.character_image_url_extra), character.getImageUrl());
         getContext().startActivity(intent);
     }
 

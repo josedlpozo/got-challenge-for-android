@@ -47,15 +47,15 @@ public class CharacterDetailActivity extends BaseActivity {
     }
 
     private String getCharacterDescription(){
-        return getIntent().getStringExtra("description");
+        return getIntent().getStringExtra(getString(R.string.character_description_extra));
     }
 
     private String getCharacterName(){
-        return getIntent().getStringExtra("name");
+        return getIntent().getStringExtra(getString(R.string.character_name_extra));
     }
 
     private String getCharacterImageUrl(){
-        return getIntent().getStringExtra("image_url");
+        return getIntent().getStringExtra(getString(R.string.character_image_url_extra));
     }
 
     private void initializeUI(){
