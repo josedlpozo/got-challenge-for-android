@@ -1,10 +1,10 @@
-package es.npatarino.android.gotchallenge.datasource;
+package es.npatarino.android.gotchallenge.datasource.api;
 
 import java.util.List;
 
+import es.npatarino.android.gotchallenge.datasource.api.service.CharacterService;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

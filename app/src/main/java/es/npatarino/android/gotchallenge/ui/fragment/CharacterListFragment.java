@@ -18,7 +18,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
-import es.npatarino.android.gotchallenge.datasource.CharactersDataSource;
+import es.npatarino.android.gotchallenge.datasource.api.CharactersDataSource;
+import es.npatarino.android.gotchallenge.datasource.cache.CacheStrategy;
+import es.npatarino.android.gotchallenge.datasource.db.CharactersDaoImpl;
+import es.npatarino.android.gotchallenge.datasource.db.dao.CharacterDao;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.repository.CharacterRepository;
 import es.npatarino.android.gotchallenge.ui.activity.CharacterDetailActivity;
@@ -80,7 +83,10 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
 
     private void initializePresenter(){
         CharactersDataSource charactersDataSource = new CharactersDataSource();
-        CharacterRepository characterRepository = CharacterRepository.getInstance(charactersDataSource);
+        CharacterDao characterDao = new CharactersDaoImpl(getContext());
+        CacheStrategy cacheStrategy = new CacheStrategy(getContext());
+        CharacterRepository characterRepository = CharacterRepository.getInstance(charactersDataSource,
+                characterDao, cacheStrategy);
         GetAllCharacters getAllCharacters = new GetAllCharacters(characterRepository);
         GetCharactersByQuery getCharactersByQuery = new GetCharactersByQuery(characterRepository);
 

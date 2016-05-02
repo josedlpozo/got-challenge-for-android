@@ -1,18 +1,29 @@
 package es.npatarino.android.gotchallenge.model;
 
 import com.google.gson.annotations.SerializedName;
+import com.j256.ormlite.field.DatabaseField;
 
 /**
  * Created by Nicolás Patarino on 21/02/16.
  */
 public class GoTCharacter {
 
+    @DatabaseField
     String name;
+    @DatabaseField
     String imageUrl;
+    @DatabaseField
     String description;
+    @DatabaseField
     String houseImageUrl;
+    @DatabaseField
     String houseName;
+    @DatabaseField
     String houseId;
+
+    public GoTCharacter(){
+
+    }
 
     public String getName() {
         return name;

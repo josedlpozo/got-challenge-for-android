@@ -1,8 +1,9 @@
-package es.npatarino.android.gotchallenge.datasource;
+package es.npatarino.android.gotchallenge.datasource.api;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import es.npatarino.android.gotchallenge.datasource.api.service.HousesService;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
 import retrofit2.Call;

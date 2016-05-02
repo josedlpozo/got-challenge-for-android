@@ -15,7 +15,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
-import es.npatarino.android.gotchallenge.datasource.CharactersDataSource;
+import es.npatarino.android.gotchallenge.datasource.api.CharactersDataSource;
+import es.npatarino.android.gotchallenge.datasource.cache.CacheStrategy;
+import es.npatarino.android.gotchallenge.datasource.db.CharactersDaoImpl;
+import es.npatarino.android.gotchallenge.datasource.db.dao.CharacterDao;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.repository.CharacterRepository;
 import es.npatarino.android.gotchallenge.ui.adapter.CharactersAdapter;
@@ -75,7 +78,10 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
 
     private void initializePresenter(){
         CharactersDataSource charactersDataSource = new CharactersDataSource();
-        CharacterRepository characterRepository = CharacterRepository.getInstance(charactersDataSource);
+        CharacterDao characterDao = new CharactersDaoImpl(this);
+        CacheStrategy cacheStrategy = new CacheStrategy(this);
+        CharacterRepository characterRepository = CharacterRepository.getInstance(charactersDataSource,
+                characterDao, cacheStrategy);
         GetCharactersByHouseId getCharactersByHouseId = new GetCharactersByHouseId(characterRepository);
 
         characterByHousePresenter = new CharacterByHousePresenter(getCharactersByHouseId);

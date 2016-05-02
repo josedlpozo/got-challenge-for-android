@@ -3,8 +3,9 @@ package es.npatarino.android.gotchallenge.repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import es.npatarino.android.gotchallenge.datasource.CharactersDataSource;
-import es.npatarino.android.gotchallenge.datasource.HousesDataSource;
+import es.npatarino.android.gotchallenge.datasource.api.HousesDataSource;
+import es.npatarino.android.gotchallenge.datasource.cache.CacheStrategy;
+import es.npatarino.android.gotchallenge.datasource.db.dao.HouseDao;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
 
 /**
@@ -17,31 +18,49 @@ public class HousesRepository {
     private List<GoTHouse> houses;
 
     private HousesDataSource housesDataSource;
+    private HouseDao houseDao;
+    private CacheStrategy cacheStrategy;
 
-    protected HousesRepository(HousesDataSource housesDataSource){
+    protected HousesRepository(HousesDataSource housesDataSource, HouseDao houseDao,
+                               CacheStrategy cacheStrategy){
         this.housesDataSource = housesDataSource;
+        this.houseDao = houseDao;
+        this.cacheStrategy = cacheStrategy;
     }
 
-    public static HousesRepository getInstance(HousesDataSource housesDataSource) {
+    public static HousesRepository getInstance(HousesDataSource housesDataSource, HouseDao houseDao,
+                                               CacheStrategy cacheStrategy){
         if(instance == null) {
-            instance = new HousesRepository(housesDataSource);
+            instance = new HousesRepository(housesDataSource, houseDao, cacheStrategy);
         }
         return instance;
     }
 
     public void getHouses(final Callback callback){
-        housesDataSource.getHouses(new HousesDataSource.Callback() {
-            @Override
-            public void housesLoaded(List<GoTHouse> housesList) {
-                houses = new ArrayList<GoTHouse>(housesList);
-                callback.housesLoaded(houses);
-            }
+        if(cacheStrategy.isValidData()){
+            houses = new ArrayList<>(houseDao.getAllHousesSaved());
+            callback.housesLoaded(houses);
+        }else {
+            housesDataSource.getHouses(new HousesDataSource.Callback() {
+                @Override
+                public void housesLoaded(List<GoTHouse> housesList) {
+                    houses = new ArrayList<GoTHouse>(housesList);
 
-            @Override
-            public void onError() {
-                callback.onError();
-            }
-        });
+                    houseDao.eraseHousesData();
+
+                    houseDao.saveHousesList(housesList);
+
+                    cacheStrategy.saveDate();
+
+                    callback.housesLoaded(houses);
+                }
+
+                @Override
+                public void onError() {
+                    callback.onError();
+                }
+            });
+        }
     }
 
     public interface Callback{

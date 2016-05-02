@@ -13,7 +13,10 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
-import es.npatarino.android.gotchallenge.datasource.HousesDataSource;
+import es.npatarino.android.gotchallenge.datasource.api.HousesDataSource;
+import es.npatarino.android.gotchallenge.datasource.cache.CacheStrategy;
+import es.npatarino.android.gotchallenge.datasource.db.HousesDaoImpl;
+import es.npatarino.android.gotchallenge.datasource.db.dao.HouseDao;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
 import es.npatarino.android.gotchallenge.repository.HousesRepository;
 import es.npatarino.android.gotchallenge.ui.activity.CharactersByHouseActivity;
@@ -66,7 +69,10 @@ public class HousesListFragment extends BaseFragment implements HousesPresenter.
 
     private void initializePresenter(){
         HousesDataSource housesDataSource = new HousesDataSource();
-        HousesRepository housesRepository = HousesRepository.getInstance(housesDataSource);
+        HouseDao houseDao = new HousesDaoImpl(getContext());
+        CacheStrategy cacheStrategy = new CacheStrategy(getContext());
+        HousesRepository housesRepository = HousesRepository.getInstance(housesDataSource,
+                houseDao, cacheStrategy);
         GetAllHouses getAllHouses = new GetAllHouses(housesRepository);
 
         housesPresenter = new HousesPresenter(getAllHouses);

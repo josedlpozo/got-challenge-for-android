@@ -1,4 +1,4 @@
-package es.npatarino.android.gotchallenge.datasource;
+package es.npatarino.android.gotchallenge.datasource.api.service;
 
 import java.util.List;
 
