@@ -13,6 +13,8 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.net.URL;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.ui.presenter.CharacterPresenter;
@@ -22,21 +24,22 @@ import es.npatarino.android.gotchallenge.ui.presenter.CharacterPresenter;
  */
 public class GotCharacterViewHolder extends RecyclerView.ViewHolder {
 
-    private CharacterPresenter presenter;
+    @BindView(R.id.character_image)
+    ImageView characterImageView;
+    @BindView(R.id.character_name)
+    TextView characterName;
 
-    ImageView imp;
-    TextView tvn;
+    private CharacterPresenter presenter;
 
     public GotCharacterViewHolder(View itemView, CharacterPresenter presenter) {
         super(itemView);
+        ButterKnife.bind(this, itemView);
         this.presenter = presenter;
-        imp = (ImageView) itemView.findViewById(R.id.ivBackground);
-        tvn = (TextView) itemView.findViewById(R.id.tv_name);
     }
 
     public void render(final GoTCharacter goTCharacter) {
-        Picasso.with(itemView.getContext()).load(goTCharacter.getImageUrl()).into(imp);
-        tvn.setText(goTCharacter.getName());
+        Picasso.with(itemView.getContext()).load(goTCharacter.getImageUrl()).into(characterImageView);
+        characterName.setText(goTCharacter.getName());
     }
 
     public void hookListener(final GoTCharacter goTCharacter){
