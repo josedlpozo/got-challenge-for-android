@@ -118,7 +118,7 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
         Intent intent = new Intent(this, DetailActivity.class);
         intent.putExtra("description", character.getDescription());
         intent.putExtra("name", character.getName());
-        intent.putExtra("imageUrl", character.getImageUrl());
+        intent.putExtra("image_url", character.getImageUrl());
         startActivity(intent);
     }
 

@@ -55,7 +55,7 @@ public class DetailActivity extends BaseActivity {
     }
 
     private String getCharacterImageUrl(){
-        return getIntent().getStringExtra("imageUrl");
+        return getIntent().getStringExtra("image_url");
     }
 
     private void initializeUI(){
