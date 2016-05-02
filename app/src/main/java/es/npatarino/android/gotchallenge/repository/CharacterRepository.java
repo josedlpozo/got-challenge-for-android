@@ -1,5 +1,7 @@
 package es.npatarino.android.gotchallenge.repository;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,16 +13,24 @@ import es.npatarino.android.gotchallenge.model.GoTCharacter;
  */
 public class CharacterRepository {
 
+    private static CharacterRepository instance = null;
+
     private List<GoTCharacter> characters;
 
     private CharactersDataSource charactersDataSource;
 
-    public CharacterRepository(CharactersDataSource charactersDataSource){
+    protected CharacterRepository(CharactersDataSource charactersDataSource){
         this.charactersDataSource = charactersDataSource;
     }
 
-    public void getCharacters(final Callback callback){
+    public static CharacterRepository getInstance(CharactersDataSource charactersDataSource) {
+        if(instance == null) {
+            instance = new CharacterRepository(charactersDataSource);
+        }
+        return instance;
+    }
 
+    public void getCharacters(final Callback callback){
         charactersDataSource.getCharacters(new CharactersDataSource.Callback() {
             @Override
             public void charactersLoaded(List<GoTCharacter> charactersList) {
@@ -41,6 +51,16 @@ public class CharacterRepository {
             String characterName = character.getName().toLowerCase();
             String queryLowerCase = query.toLowerCase();
             if(characterName.contains(queryLowerCase)) aux.add(character);
+        }
+
+        callback.charactersLoaded(aux);
+    }
+
+    public void getCharactersByHouseId(String houseId, Callback callback){
+        List<GoTCharacter> aux = new ArrayList<>();
+        Log.d("eee", houseId);
+        for(GoTCharacter character : characters){
+            if(character.getHouseId().equals(houseId)) aux.add(character);
         }
 
         callback.charactersLoaded(aux);

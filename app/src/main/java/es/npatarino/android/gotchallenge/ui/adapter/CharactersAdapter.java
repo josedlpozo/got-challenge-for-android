@@ -1,7 +1,5 @@
 package es.npatarino.android.gotchallenge.ui.adapter;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,19 +11,19 @@ import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
-import es.npatarino.android.gotchallenge.ui.activity.DetailActivity;
+import es.npatarino.android.gotchallenge.ui.presenter.CharacterListPresenter;
 import es.npatarino.android.gotchallenge.ui.presenter.CharacterPresenter;
 import es.npatarino.android.gotchallenge.ui.viewholder.GotCharacterViewHolder;
 
 /**
  * Created by josedelpozo on 29/4/16.
  */
-public class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class CharactersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<GoTCharacter> characters;
     private CharacterPresenter presenter;
 
-    public GoTAdapter(CharacterPresenter presenter) {
+    public CharactersAdapter(CharacterPresenter presenter) {
         this.characters = new ArrayList<>();
         this.presenter = presenter;
     }

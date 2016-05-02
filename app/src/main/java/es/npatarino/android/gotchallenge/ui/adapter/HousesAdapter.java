@@ -25,12 +25,12 @@ import es.npatarino.android.gotchallenge.ui.viewholder.GoTHouseViewHolder;
 /**
  * Created by josedelpozo on 28/4/16.
  */
-public class GoTHouseAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class HousesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<GoTHouse> houses;
     private HousesPresenter presenter;
 
-    public GoTHouseAdapter(HousesPresenter presenter) {
+    public HousesAdapter(HousesPresenter presenter) {
         this.houses = new ArrayList<>();
         this.presenter = presenter;
     }

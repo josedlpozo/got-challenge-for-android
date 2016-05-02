@@ -3,6 +3,7 @@ package es.npatarino.android.gotchallenge.repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.npatarino.android.gotchallenge.datasource.CharactersDataSource;
 import es.npatarino.android.gotchallenge.datasource.HousesDataSource;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
 
@@ -11,12 +12,21 @@ import es.npatarino.android.gotchallenge.model.GoTHouse;
  */
 public class HousesRepository {
 
+    private static HousesRepository instance = null;
+
     private List<GoTHouse> houses;
 
     private HousesDataSource housesDataSource;
 
-    public HousesRepository(HousesDataSource housesDataSource){
+    protected HousesRepository(HousesDataSource housesDataSource){
         this.housesDataSource = housesDataSource;
+    }
+
+    public static HousesRepository getInstance(HousesDataSource housesDataSource) {
+        if(instance == null) {
+            instance = new HousesRepository(housesDataSource);
+        }
+        return instance;
     }
 
     public void getHouses(final Callback callback){

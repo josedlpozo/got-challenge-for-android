@@ -8,7 +8,6 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,16 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -35,25 +24,24 @@ import es.npatarino.android.gotchallenge.datasource.CharactersDataSource;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.repository.CharacterRepository;
 import es.npatarino.android.gotchallenge.ui.activity.DetailActivity;
-import es.npatarino.android.gotchallenge.ui.adapter.GoTAdapter;
-import es.npatarino.android.gotchallenge.ui.presenter.CharacterPresenter;
-import es.npatarino.android.gotchallenge.ui.viewholder.GotCharacterViewHolder;
+import es.npatarino.android.gotchallenge.ui.adapter.CharactersAdapter;
+import es.npatarino.android.gotchallenge.ui.presenter.CharacterListPresenter;
 import es.npatarino.android.gotchallenge.usecase.GetAllCharacters;
 import es.npatarino.android.gotchallenge.usecase.GetCharactersByQuery;
 
 /**
  * Created by josedelpozo on 29/4/16.
  */
-public class GoTListFragment extends BaseFragment implements CharacterPresenter.View, SearchView.OnQueryTextListener{
+public class GoTListFragment extends BaseFragment implements CharacterListPresenter.View, SearchView.OnQueryTextListener{
 
     private static final String TAG = "GoTListFragment";
 
     @BindView(R.id.recycler_view)
     RecyclerView characterRecyclerView;
 
-    GoTAdapter characterAdapter;
+    CharactersAdapter characterAdapter;
 
-    CharacterPresenter characterPresenter;
+    CharacterListPresenter characterListPresenter;
 
     SearchView searchView;
 
@@ -83,7 +71,7 @@ public class GoTListFragment extends BaseFragment implements CharacterPresenter.
     }
 
     private void initializeAdapter(){
-        characterAdapter = new GoTAdapter(characterPresenter);
+        characterAdapter = new CharactersAdapter(characterListPresenter);
     }
 
     private void initializeRecyclerView(){
@@ -94,14 +82,14 @@ public class GoTListFragment extends BaseFragment implements CharacterPresenter.
 
     private void initializePresenter(){
         CharactersDataSource charactersDataSource = new CharactersDataSource();
-        CharacterRepository characterRepository = new CharacterRepository(charactersDataSource);
+        CharacterRepository characterRepository = CharacterRepository.getInstance(charactersDataSource);
         GetAllCharacters getAllCharacters = new GetAllCharacters(characterRepository);
         GetCharactersByQuery getCharactersByQuery = new GetCharactersByQuery(characterRepository);
 
-        characterPresenter = new CharacterPresenter(getAllCharacters, getCharactersByQuery);
+        characterListPresenter = new CharacterListPresenter(getAllCharacters, getCharactersByQuery);
 
-        characterPresenter.setView(this);
-        characterPresenter.initialize();
+        characterListPresenter.setView(this);
+        characterListPresenter.initialize();
     }
 
     @Override
@@ -125,13 +113,13 @@ public class GoTListFragment extends BaseFragment implements CharacterPresenter.
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        characterPresenter.searchCharactersByQuery(query);
+        characterListPresenter.searchCharactersByQuery(query);
         return false;
     }
 
     @Override
     public boolean onQueryTextChange(String newText) {
-        characterPresenter.searchCharactersByQuery(newText);
+        characterListPresenter.searchCharactersByQuery(newText);
         return false;
     }
 
