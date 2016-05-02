@@ -39,7 +39,13 @@ public class CharacterPresenter extends Presenter<CharacterPresenter.View>{
         });
     }
 
+    public void clickOnCharacter(GoTCharacter character){
+
+    }
+
     public interface View extends Presenter.View{
         void showCharacters(List<GoTCharacter> characters);
+
+        void clickOnCharacter(GoTCharacter character);
     }
 }

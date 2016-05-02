@@ -29,7 +29,7 @@ public class HousesDataSource {
             public void onResponse(Call<List<GoTCharacter>> call, Response<List<GoTCharacter>> response) {
                 if(response != null && response.body() != null){
                     List<GoTCharacter> characters = response.body();
-                    callback.housesLoaded(getAllHouses(characters));
+                    callback.housesLoaded(getAllHousesWithCharacters(characters));
                 }
             }
 
@@ -41,7 +41,7 @@ public class HousesDataSource {
         call.enqueue(callbackRetrofit);
     }
 
-    private List<GoTHouse> getAllHouses(List<GoTCharacter> characters) {
+    private List<GoTHouse> getAllHousesWithCharacters(List<GoTCharacter> characters) {
         List<GoTHouse> houses = new ArrayList<GoTHouse>();
         for (int i = 0; i < characters.size(); i++) {
             boolean b = false;

@@ -14,6 +14,7 @@ import java.util.List;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.ui.activity.DetailActivity;
+import es.npatarino.android.gotchallenge.ui.presenter.CharacterPresenter;
 import es.npatarino.android.gotchallenge.ui.viewholder.GotCharacterViewHolder;
 
 /**
@@ -22,9 +23,11 @@ import es.npatarino.android.gotchallenge.ui.viewholder.GotCharacterViewHolder;
 public class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final List<GoTCharacter> characters;
+    private CharacterPresenter presenter;
 
-    public GoTAdapter() {
+    public GoTAdapter(CharacterPresenter presenter) {
         this.characters = new ArrayList<>();
+        this.presenter = presenter;
     }
 
     public void addAll(Collection<GoTCharacter> collection) {
@@ -36,7 +39,7 @@ public class GoTAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.got_character_row, parent, false);
-        return new GotCharacterViewHolder(view);
+        return new GotCharacterViewHolder(view, presenter);
     }
 
     @Override
