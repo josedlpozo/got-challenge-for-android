@@ -25,16 +25,16 @@ Your task as Android Developer is **clone** or **fork** this repository into one
 
 ###### New functionalities to add
 
-1. Search characters by name in the characters list
-2. Create a list of a characters by house, accessing to it by clicking a house image in the list of houses
+1. Search characters by name in the characters list --> DONE
+2. Create a list of a characters by house, accessing to it by clicking a house image in the list of houses --> DONE
 3. Capability to work offline
-4. Refactor the code
+4. Refactor the code --> ALMOST DONE
 
 ###### Some optional tasks to do:
 
 1. Tests the main logic and a high level flows.
 2. Add transitions between list and detail
-3. Add parallax effect into detail page
+3. Add parallax effect into detail page --> DONE
 
 ###### Once you've finished
 1. Notify by email to rrhh@idealista.com
