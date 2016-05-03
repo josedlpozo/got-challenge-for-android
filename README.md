@@ -28,7 +28,7 @@ Your task as Android Developer is **clone** or **fork** this repository into one
 1. Search characters by name in the characters list --> DONE
 2. Create a list of a characters by house, accessing to it by clicking a house image in the list of houses --> DONE
 3. Capability to work offline --> DONE
-4. Refactor the code --> ALMOST DONE
+4. Refactor the code --> DONE
 
 ###### Some optional tasks to do:
 
