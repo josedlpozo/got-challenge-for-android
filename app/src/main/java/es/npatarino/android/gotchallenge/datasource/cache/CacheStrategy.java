@@ -2,6 +2,7 @@ package es.npatarino.android.gotchallenge.datasource.cache;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -33,8 +34,12 @@ public class CacheStrategy {
     }
 
     public boolean isValidData(){
-        Date dateSaved = new Date(sharedPreferences.getLong(DATE_NAME, 0));
+        Date dateSaved = new Date(sharedPreferences.getLong(DATE_NAME, Long.MAX_VALUE));
         Date currentDate = new Date();
+        Log.d("dates",""+currentDate.getTime()+" "+dateSaved.getTime());
+
+        if((currentDate.getTime() - dateSaved.getTime()) < 0) return false;
+
 
         if((currentDate.getTime() - dateSaved.getTime()) < THRESOLD_TIME_MILLIS) return true;
 

@@ -41,9 +41,11 @@ public class CharacterRepository {
 
     public void getCharacters(final Callback callback){
         if(cacheStrategy.isValidData()){
+            Log.d("dates"," is valid data");
             characters = new ArrayList<>(charactersDao.getAllCharactersSaved());
             callback.charactersLoaded(characters);
         }else{
+            Log.d("dates","not valid data");
             charactersDataSource.getCharacters(new CharactersDataSource.Callback() {
                 @Override
                 public void charactersLoaded(List<GoTCharacter> charactersList) {
