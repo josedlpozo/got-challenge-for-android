@@ -33,6 +33,7 @@ public class CacheStrategy {
         editor.commit();
     }
 
+    /* Check if the data is up to date or if it should be requested again */
     public boolean isValidData(){
         Date dateSaved = new Date(sharedPreferences.getLong(DATE_NAME, Long.MAX_VALUE));
         Date currentDate = new Date();
