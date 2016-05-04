@@ -33,7 +33,7 @@ Your task as Android Developer is **clone** or **fork** this repository into one
 ###### Some optional tasks to do:
 
 1. Tests the main logic and a high level flows.
-2. Add transitions between list and detail
+2. Add transitions between list and detail --> SharedElementTransition DONE
 3. Add parallax effect into detail page --> DONE
 
 ###### Once you've finished
