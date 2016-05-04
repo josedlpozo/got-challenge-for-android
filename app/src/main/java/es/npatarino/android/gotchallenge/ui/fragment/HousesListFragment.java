@@ -1,12 +1,15 @@
 package es.npatarino.android.gotchallenge.ui.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -87,11 +90,18 @@ public class HousesListFragment extends BaseFragment implements HousesPresenter.
     }
 
     @Override
-    public void clickOnHouse(GoTHouse house) {
+    public void clickOnHouse(GoTHouse house, ImageView houseImageView) {
         Intent intent = new Intent(getContext(), CharactersByHouseActivity.class);
         intent.putExtra(getString(R.string.house_id_extra), house.getHouseId());
         intent.putExtra(getString(R.string.house_name_extra), house.getHouseName());
         intent.putExtra(getString(R.string.house_image_url_extra), house.getHouseImageUrl());
-        getContext().startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(getActivity(), houseImageView, getString(R.string.activity_image_trans));
+            startActivity(intent, options.toBundle());
+        }
+        else {
+            startActivity(intent);
+        }
     }
 }

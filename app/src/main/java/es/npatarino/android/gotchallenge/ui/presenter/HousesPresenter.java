@@ -1,5 +1,7 @@
 package es.npatarino.android.gotchallenge.ui.presenter;
 
+import android.widget.ImageView;
+
 import java.util.List;
 
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
@@ -41,13 +43,13 @@ public class HousesPresenter extends Presenter<HousesPresenter.View>{
         });
     }
 
-    public void clickOnHouse(GoTHouse house){
-        getView().clickOnHouse(house);
+    public void clickOnHouse(GoTHouse house, ImageView houseImageView){
+        getView().clickOnHouse(house, houseImageView);
     }
 
     public interface View extends Presenter.View{
         void showHouses(List<GoTHouse> houses);
 
-        void clickOnHouse(GoTHouse house);
+        void clickOnHouse(GoTHouse house, ImageView houseImageView);
     }
 }

@@ -42,7 +42,7 @@ public class GoTHouseViewHolder extends RecyclerView.ViewHolder {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.clickOnHouse(house);
+                presenter.clickOnHouse(house, houseImageView);
             }
         });
     }
