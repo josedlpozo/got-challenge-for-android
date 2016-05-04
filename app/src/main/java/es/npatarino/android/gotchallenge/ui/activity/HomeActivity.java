@@ -47,6 +47,7 @@ public class HomeActivity extends BaseActivity {
 
     private void initializeToolbar(){
         setSupportActionBar(toolbar);
+        setTitle(getString(R.string.title_activity_home));
     }
 
     private void initializeFragmentPagerAdapter(){

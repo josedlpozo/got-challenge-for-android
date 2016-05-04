@@ -164,6 +164,7 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
         MenuItem item = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(this);
+        searchView.setQueryHint(getString(R.string.search_hint));
     }
 
     public void hideKeyboard() {
