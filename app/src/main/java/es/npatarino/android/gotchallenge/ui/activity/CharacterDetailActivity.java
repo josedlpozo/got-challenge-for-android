@@ -42,10 +42,8 @@ public class CharacterDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         ButterKnife.bind(this);
-        setupWindowAnimations();
         initializeUI();
         initializeToolbar();
-
     }
 
     @Override
@@ -53,13 +51,6 @@ public class CharacterDetailActivity extends BaseActivity {
         return R.layout.activity_detail;
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    private void setupWindowAnimations() {
-        Log.d("eee", "setupWindowAnimations2");
-        Fade fade = new Fade();
-        fade.setDuration(1000);
-        getWindow().setEnterTransition(fade);
-    }
 
     private String getCharacterDescription(){
         return getIntent().getStringExtra(getString(R.string.character_description_extra));
