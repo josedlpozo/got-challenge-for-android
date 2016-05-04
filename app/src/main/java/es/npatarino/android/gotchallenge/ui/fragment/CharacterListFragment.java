@@ -1,5 +1,6 @@
 package es.npatarino.android.gotchallenge.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 
 import java.util.List;
@@ -91,6 +93,14 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
         characterRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         characterRecyclerView.setHasFixedSize(true);
         characterRecyclerView.setAdapter(characterAdapter);
+
+        characterRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                hideKeyboard();
+            }
+        });
     }
 
     private void initializePresenter(){
@@ -154,6 +164,11 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
         MenuItem item = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(this);
+    }
+
+    public void hideKeyboard() {
+        InputMethodManager inputManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
 }
