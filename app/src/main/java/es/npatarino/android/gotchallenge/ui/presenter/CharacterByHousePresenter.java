@@ -1,5 +1,7 @@
 package es.npatarino.android.gotchallenge.ui.presenter;
 
+import android.widget.ImageView;
+
 import java.util.List;
 
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
@@ -45,7 +47,7 @@ public class CharacterByHousePresenter extends Presenter<CharacterListPresenter.
     }
 
     @Override
-    public void clickOnCharacter(GoTCharacter character) {
-        getView().clickOnCharacter(character);
+    public void clickOnCharacter(GoTCharacter character, ImageView imageView) {
+        getView().clickOnCharacter(character, imageView);
     }
 }

@@ -1,10 +1,16 @@
 package es.npatarino.android.gotchallenge.ui.activity;
 
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Explode;
+import android.transition.Slide;
+import android.util.Log;
+import android.view.animation.PathInterpolator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

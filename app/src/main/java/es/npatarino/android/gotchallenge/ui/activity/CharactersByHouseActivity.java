@@ -1,7 +1,9 @@
 package es.npatarino.android.gotchallenge.ui.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -119,12 +121,19 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
     }
 
     @Override
-    public void clickOnCharacter(GoTCharacter character) {
+    public void clickOnCharacter(GoTCharacter character, ImageView imageView) {
         Intent intent = new Intent(this, CharacterDetailActivity.class);
         intent.putExtra(getString(R.string.character_description_extra), character.getDescription());
         intent.putExtra(getString(R.string.character_name_extra), character.getName());
         intent.putExtra(getString(R.string.character_image_url_extra), character.getImageUrl());
-        startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(this, imageView, getString(R.string.activity_image_trans));
+            startActivity(intent, options.toBundle());
+        }
+        else {
+            startActivity(intent);
+        }
     }
 
     @Override

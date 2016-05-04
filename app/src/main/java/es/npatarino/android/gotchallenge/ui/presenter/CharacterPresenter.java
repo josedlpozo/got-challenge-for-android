@@ -1,5 +1,7 @@
 package es.npatarino.android.gotchallenge.ui.presenter;
 
+import android.widget.ImageView;
+
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 
 /**
@@ -7,5 +9,5 @@ import es.npatarino.android.gotchallenge.model.GoTCharacter;
  */
 public interface CharacterPresenter {
 
-    void clickOnCharacter(GoTCharacter character);
+    void clickOnCharacter(GoTCharacter character, ImageView imageView);
 }

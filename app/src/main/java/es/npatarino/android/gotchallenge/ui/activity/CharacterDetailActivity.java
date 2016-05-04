@@ -1,10 +1,15 @@
 package es.npatarino.android.gotchallenge.ui.activity;
 
+import android.annotation.TargetApi;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Fade;
+import android.transition.Slide;
+import android.transition.Visibility;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,13 +42,23 @@ public class CharacterDetailActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         ButterKnife.bind(this);
+        setupWindowAnimations();
         initializeUI();
         initializeToolbar();
+
     }
 
     @Override
     public int getLayoutId() {
         return R.layout.activity_detail;
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void setupWindowAnimations() {
+        Log.d("eee", "setupWindowAnimations2");
+        Fade fade = new Fade();
+        fade.setDuration(1000);
+        getWindow().setEnterTransition(fade);
     }
 
     private String getCharacterDescription(){

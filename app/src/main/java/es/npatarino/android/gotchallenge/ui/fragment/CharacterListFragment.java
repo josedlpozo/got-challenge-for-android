@@ -1,17 +1,21 @@
 package es.npatarino.android.gotchallenge.ui.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.transition.Explode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import java.util.List;
 
@@ -62,7 +66,6 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
         initializePresenter();
         initializeAdapter();
         initializeRecyclerView();
-
         return rootView;
     }
 
@@ -102,12 +105,19 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
     }
 
     @Override
-    public void clickOnCharacter(GoTCharacter character) {
+    public void clickOnCharacter(GoTCharacter character, ImageView imageView) {
         Intent intent = new Intent(getContext(), CharacterDetailActivity.class);
         intent.putExtra(getString(R.string.character_description_extra), character.getDescription());
         intent.putExtra(getString(R.string.character_name_extra), character.getName());
         intent.putExtra(getString(R.string.character_image_url_extra), character.getImageUrl());
-        getContext().startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation(getActivity(), imageView, getString(R.string.activity_image_trans));
+            startActivity(intent, options.toBundle());
+        }
+        else {
+            startActivity(intent);
+        }
     }
 
     @Override
