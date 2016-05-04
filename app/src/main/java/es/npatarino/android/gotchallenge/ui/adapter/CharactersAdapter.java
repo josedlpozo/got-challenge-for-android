@@ -11,6 +11,7 @@ import java.util.List;
 
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
+import es.npatarino.android.gotchallenge.ui.loader.ImageLoader;
 import es.npatarino.android.gotchallenge.ui.presenter.CharacterListPresenter;
 import es.npatarino.android.gotchallenge.ui.presenter.CharacterPresenter;
 import es.npatarino.android.gotchallenge.ui.viewholder.GotCharacterViewHolder;
@@ -22,10 +23,12 @@ public class CharactersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private final List<GoTCharacter> characters;
     private CharacterPresenter presenter;
+    private ImageLoader imageLoader;
 
-    public CharactersAdapter(CharacterPresenter presenter) {
+    public CharactersAdapter(CharacterPresenter presenter, ImageLoader imageLoader) {
         this.characters = new ArrayList<>();
         this.presenter = presenter;
+        this.imageLoader = imageLoader;
     }
 
     public void addAll(Collection<GoTCharacter> collection) {
@@ -42,7 +45,7 @@ public class CharactersAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.got_character_row, parent, false);
-        return new GotCharacterViewHolder(view, presenter);
+        return new GotCharacterViewHolder(view, presenter, imageLoader);
     }
 
     @Override

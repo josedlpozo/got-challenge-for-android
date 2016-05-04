@@ -17,7 +17,9 @@
     <string name="house_id_extra">house_id</string>
     <string name="house_image_url_extra">house_image_url</string>
 
-    <string name="activity_image_trans">image_transition</string>
+    <string name="character_image_trans">character_image_transition</string>
+
+    <string name="house_image_trans">house_image_transition</string>
 
 
 </resources>

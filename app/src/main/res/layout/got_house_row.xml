@@ -6,7 +6,7 @@
         android:id="@+id/house_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:transitionName="@string/activity_image_trans"
+        android:transitionName="@string/house_image_trans"
         />
 
     <TextView

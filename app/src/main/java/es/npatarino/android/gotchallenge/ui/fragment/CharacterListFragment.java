@@ -30,6 +30,8 @@ import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.repository.CharacterRepository;
 import es.npatarino.android.gotchallenge.ui.activity.CharacterDetailActivity;
 import es.npatarino.android.gotchallenge.ui.adapter.CharactersAdapter;
+import es.npatarino.android.gotchallenge.ui.loader.ImageLoader;
+import es.npatarino.android.gotchallenge.ui.loader.PicassoImageLoader;
 import es.npatarino.android.gotchallenge.ui.presenter.CharacterListPresenter;
 import es.npatarino.android.gotchallenge.usecase.GetAllCharacters;
 import es.npatarino.android.gotchallenge.usecase.GetCharactersByQuery;
@@ -50,6 +52,8 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
 
     SearchView searchView;
 
+    ImageLoader imageLoader;
+
     public CharacterListFragment() {
     }
 
@@ -64,6 +68,7 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
         View rootView = inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, rootView);
         initializePresenter();
+        initializeImageLoader();
         initializeAdapter();
         initializeRecyclerView();
         return rootView;
@@ -75,7 +80,11 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
     }
 
     private void initializeAdapter(){
-        characterAdapter = new CharactersAdapter(characterListPresenter);
+        characterAdapter = new CharactersAdapter(characterListPresenter, imageLoader);
+    }
+
+    private void initializeImageLoader(){
+        imageLoader = new PicassoImageLoader();
     }
 
     private void initializeRecyclerView(){
@@ -112,7 +121,7 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
         intent.putExtra(getString(R.string.character_image_url_extra), character.getImageUrl());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(getActivity(), imageView, getString(R.string.activity_image_trans));
+                    makeSceneTransitionAnimation(getActivity(), imageView, getString(R.string.character_image_trans));
             startActivity(intent, options.toBundle());
         }
         else {
@@ -145,10 +154,6 @@ public class CharacterListFragment extends BaseFragment implements CharacterList
         MenuItem item = menu.findItem(R.id.action_search);
         searchView = (SearchView) MenuItemCompat.getActionView(item);
         searchView.setOnQueryTextListener(this);
-        /*SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-        searchView.setIconified(false);
-        searchView.setQueryHint(getString(R.string.search_hint));*/
     }
 
 }

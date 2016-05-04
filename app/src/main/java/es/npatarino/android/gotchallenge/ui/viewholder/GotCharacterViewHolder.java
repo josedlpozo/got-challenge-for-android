@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
+import es.npatarino.android.gotchallenge.ui.loader.ImageLoader;
 import es.npatarino.android.gotchallenge.ui.presenter.CharacterListPresenter;
 import es.npatarino.android.gotchallenge.ui.presenter.CharacterPresenter;
 
@@ -25,15 +26,17 @@ public class GotCharacterViewHolder extends RecyclerView.ViewHolder {
     TextView characterName;
 
     private CharacterPresenter presenter;
+    private ImageLoader imageLoader;
 
-    public GotCharacterViewHolder(View itemView, CharacterPresenter presenter) {
+    public GotCharacterViewHolder(View itemView, CharacterPresenter presenter, ImageLoader imageLoader) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.presenter = presenter;
+        this.imageLoader = imageLoader;
     }
 
     public void render(final GoTCharacter goTCharacter) {
-        Picasso.with(itemView.getContext()).load(goTCharacter.getImageUrl()).into(characterImageView);
+        imageLoader.loadImage(goTCharacter.getImageUrl(), characterImageView);
         characterName.setText(goTCharacter.getName());
     }
 

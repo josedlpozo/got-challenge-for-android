@@ -22,6 +22,8 @@ import java.net.URL;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
+import es.npatarino.android.gotchallenge.ui.loader.ImageLoader;
+import es.npatarino.android.gotchallenge.ui.loader.PicassoImageLoader;
 
 public class CharacterDetailActivity extends BaseActivity {
 
@@ -36,6 +38,8 @@ public class CharacterDetailActivity extends BaseActivity {
     TextView characterDescription;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    ImageLoader imageLoader;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -65,7 +69,8 @@ public class CharacterDetailActivity extends BaseActivity {
     }
 
     private void initializeUI(){
-        Picasso.with(this).load(getCharacterImageUrl()).into(characterImage);
+        imageLoader = new PicassoImageLoader();
+        imageLoader.loadImage(getCharacterImageUrl(), characterImage);
 
         characterDescription.setText(getCharacterDescription());
 

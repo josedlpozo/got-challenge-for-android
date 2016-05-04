@@ -11,6 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.npatarino.android.gotchallenge.R;
 import es.npatarino.android.gotchallenge.model.GoTHouse;
+import es.npatarino.android.gotchallenge.ui.loader.ImageLoader;
 import es.npatarino.android.gotchallenge.ui.presenter.HousesPresenter;
 
 /**
@@ -26,15 +27,17 @@ public class GoTHouseViewHolder extends RecyclerView.ViewHolder {
     TextView houseName;
 
     HousesPresenter presenter;
+    ImageLoader imageLoader;
 
-    public GoTHouseViewHolder(View itemView, HousesPresenter presenter) {
+    public GoTHouseViewHolder(View itemView, HousesPresenter presenter, ImageLoader imageLoader) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         this.presenter = presenter;
+        this.imageLoader = imageLoader;
     }
 
     public void render(final GoTHouse house) {
-        Picasso.with(itemView.getContext()).load(house.getHouseImageUrl()).into(houseImageView);
+        imageLoader.loadImage(house.getHouseImageUrl(), houseImageView);
         houseName.setText(house.getHouseName());
     }
 

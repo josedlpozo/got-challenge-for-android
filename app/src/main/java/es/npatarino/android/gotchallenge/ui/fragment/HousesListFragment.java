@@ -24,6 +24,8 @@ import es.npatarino.android.gotchallenge.model.GoTHouse;
 import es.npatarino.android.gotchallenge.repository.HousesRepository;
 import es.npatarino.android.gotchallenge.ui.activity.CharactersByHouseActivity;
 import es.npatarino.android.gotchallenge.ui.adapter.HousesAdapter;
+import es.npatarino.android.gotchallenge.ui.loader.ImageLoader;
+import es.npatarino.android.gotchallenge.ui.loader.PicassoImageLoader;
 import es.npatarino.android.gotchallenge.ui.presenter.HousesPresenter;
 import es.npatarino.android.gotchallenge.usecase.GetAllHouses;
 
@@ -41,6 +43,8 @@ public class HousesListFragment extends BaseFragment implements HousesPresenter.
 
     HousesPresenter housesPresenter;
 
+    ImageLoader imageLoader;
+
     public HousesListFragment() {
     }
 
@@ -49,6 +53,7 @@ public class HousesListFragment extends BaseFragment implements HousesPresenter.
         View rootView = inflater.inflate(getLayoutId(), container, false);
         ButterKnife.bind(this, rootView);
         initializePresenter();
+        initializeImageLoader();
         initializeAdapter();
         initializeRecyclerView();
 
@@ -61,13 +66,17 @@ public class HousesListFragment extends BaseFragment implements HousesPresenter.
     }
 
     private void initializeAdapter(){
-        housesAdapter = new HousesAdapter(housesPresenter);
+        housesAdapter = new HousesAdapter(housesPresenter, imageLoader);
     }
 
     private void initializeRecyclerView(){
         housesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         housesRecyclerView.setHasFixedSize(true);
         housesRecyclerView.setAdapter(housesAdapter);
+    }
+
+    private void initializeImageLoader(){
+        imageLoader = new PicassoImageLoader();
     }
 
     private void initializePresenter(){
@@ -97,7 +106,7 @@ public class HousesListFragment extends BaseFragment implements HousesPresenter.
         intent.putExtra(getString(R.string.house_image_url_extra), house.getHouseImageUrl());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(getActivity(), houseImageView, getString(R.string.activity_image_trans));
+                    makeSceneTransitionAnimation(getActivity(), houseImageView, getString(R.string.house_image_trans));
             startActivity(intent, options.toBundle());
         }
         else {

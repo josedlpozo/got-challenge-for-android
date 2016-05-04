@@ -24,6 +24,8 @@ import es.npatarino.android.gotchallenge.datasource.db.dao.CharacterDao;
 import es.npatarino.android.gotchallenge.model.GoTCharacter;
 import es.npatarino.android.gotchallenge.repository.CharacterRepository;
 import es.npatarino.android.gotchallenge.ui.adapter.CharactersAdapter;
+import es.npatarino.android.gotchallenge.ui.loader.ImageLoader;
+import es.npatarino.android.gotchallenge.ui.loader.PicassoImageLoader;
 import es.npatarino.android.gotchallenge.ui.presenter.CharacterByHousePresenter;
 import es.npatarino.android.gotchallenge.ui.presenter.CharacterListPresenter;
 import es.npatarino.android.gotchallenge.usecase.GetCharactersByHouseId;
@@ -41,12 +43,15 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
 
     CharacterByHousePresenter characterByHousePresenter;
 
+    ImageLoader imageLoader;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         ButterKnife.bind(this);
         initializePresenter();
+        initializeImageLoader();
         initializeAdapter();
         initializeRecyclerView();
         initializeUI();
@@ -72,8 +77,12 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
         });
     }
 
+    private void initializeImageLoader(){
+        imageLoader = new PicassoImageLoader();
+    }
+
     private void initializeUI(){
-        Picasso.with(this).load(getHouseImageUrl()).into(houseImage);
+        imageLoader.loadImage(getHouseImageUrl(), houseImage);
 
         setTitle(getHouseName());
     }
@@ -94,7 +103,7 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
     }
 
     private void initializeAdapter(){
-        characterAdapter = new CharactersAdapter(characterByHousePresenter);
+        characterAdapter = new CharactersAdapter(characterByHousePresenter, imageLoader);
     }
 
     private void initializeRecyclerView(){
@@ -128,7 +137,7 @@ public class CharactersByHouseActivity extends BaseActivity implements Character
         intent.putExtra(getString(R.string.character_image_url_extra), character.getImageUrl());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation(this, imageView, getString(R.string.activity_image_trans));
+                    makeSceneTransitionAnimation(this, imageView, getString(R.string.character_image_trans));
             startActivity(intent, options.toBundle());
         }
         else {
